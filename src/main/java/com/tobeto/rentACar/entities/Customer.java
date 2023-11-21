@@ -1,9 +1,16 @@
 package com.tobeto.rentACar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Table(name = "customers")
 @Entity
+@Getter
+@Setter
 public class Customer {
 
     @Id
@@ -23,14 +30,13 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Payment> payments;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Rental> rentals;
 
-
-    @ManyToOne
-    @JoinColumn(name = "rental_id")
-    private Rental rental;
 
 }

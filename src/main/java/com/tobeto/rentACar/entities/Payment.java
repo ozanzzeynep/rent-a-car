@@ -1,15 +1,16 @@
 package com.tobeto.rentACar.entities;
 
 import jakarta.persistence.*;
-
-import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Table(name = "payment")
 @Entity
+@Getter
+@Setter
 public class Payment {
 
     @Id
@@ -26,11 +27,8 @@ public class Payment {
     @Column(name = "cvv")
     private String cvv;
 
-    @OneToMany(mappedBy = "payment")
-    private List<Customer> customers;
-
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
 }

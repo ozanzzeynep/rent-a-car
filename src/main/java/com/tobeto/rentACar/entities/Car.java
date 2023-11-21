@@ -1,11 +1,18 @@
 package com.tobeto.rentACar.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 //ORM : Object Relation Mapping
 @Table(name = "cars")
 @Entity
+@Getter
+@Setter
 public class Car {
 
     @Id
@@ -30,8 +37,8 @@ public class Car {
     private Brand brand;
 
 
-    @ManyToOne
-    @JoinColumn(name = "rental_id")
-    private Rental rental;
+    @OneToMany(mappedBy = "car")
+    @JsonIgnore
+    private List<Rental> rentals;
 
 }

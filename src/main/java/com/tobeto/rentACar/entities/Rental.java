@@ -2,6 +2,8 @@ package com.tobeto.rentACar.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Table(name = "rental")
 @Entity
+@Getter
+@Setter
 public class Rental {
 
     @Id
@@ -23,9 +27,12 @@ public class Rental {
     @Column(name = "due")
     private LocalDate due;
 
-    @OneToMany(mappedBy = "rental")
-    private List<Customer> customers;
 
-    @OneToMany(mappedBy = "rental")
-    private List<Car> cars;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
 }

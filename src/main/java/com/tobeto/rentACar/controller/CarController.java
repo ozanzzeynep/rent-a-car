@@ -1,7 +1,11 @@
 package com.tobeto.rentACar.controller;
 
-import com.tobeto.rentACar.entities.Car;
-import com.tobeto.rentACar.repositories.CarRepository;
+import com.tobeto.rentACar.services.abstracts.CarService;
+import com.tobeto.rentACar.services.dtos.car.request.AddCarRequest;
+import com.tobeto.rentACar.services.dtos.car.request.UpdateCarRequest;
+import com.tobeto.rentACar.services.dtos.car.response.AddCarResponse;
+import com.tobeto.rentACar.services.dtos.car.response.GetCarResponse;
+import com.tobeto.rentACar.services.dtos.car.response.UpdateCarResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,44 +13,50 @@ import java.util.List;
 @RestController
 @RequestMapping("api/cars")
 public class CarController {
-    private final CarRepository carRepository;
+    private final CarService carService;
 
-    public CarController(CarRepository carRepository) {
-        this.carRepository = carRepository;
+    public CarController(CarService carService) {
+        this.carService = carService;
     }
-
     @GetMapping
-    public List<Car> getAll(){
-        List<Car> cars = carRepository.findAll();
-        return cars;
+    public List<GetCarResponse> getAll(){
+        return carService.getAll();
     }
 
     @GetMapping("{id}")
-    public Car getById(@PathVariable int id){
-        return carRepository.findById(id).orElseThrow();
+    public GetCarResponse getById(@PathVariable int id) throws Throwable {
+        return carService.getCarById(id);
     }
 
+
     @PostMapping
-    public void add(@RequestBody Car car){
-        carRepository.save(car);
+    public AddCarResponse add(@RequestBody AddCarRequest request){
+        AddCarRequest carRequest = AddCarRequest.builder()
+                .name(request.getName())
+                .model(request.getModel())
+                .year(request.getYear())
+                .price(request.getPrice())
+                .available(request.isAvailable())
+                .build();
+        return carService.add(carRequest);
+    }
+
+    @PutMapping("{id}")
+    public UpdateCarResponse updateCar(@PathVariable int id, @RequestBody UpdateCarRequest request) throws Throwable {
+        UpdateCarRequest carRequest = UpdateCarRequest.builder()
+                        .brand(request.getBrand())
+                                .id(request.getId())
+                                        .model(request.getModel())
+                                                .year(request.getYear())
+                .price(request.getPrice())
+                .available(request.isAvailable())
+                .build();
+
+        return carService.update(carRequest);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-        Car carToDelete = carRepository.findById(id).orElseThrow();
-        carRepository.delete(carToDelete);
-    }
-    @PutMapping("{id}")
-    public Car updateCar(@PathVariable int id, @RequestBody Car carDetails) throws Throwable {
-        Car updateCar = carRepository.findById(id).orElseThrow(()->
-                new Throwable("Car is not exist with id : "  + id));
-
-        updateCar.setModel(carDetails.getModel());
-        updateCar.setYear(carDetails.getYear());
-        updateCar.setPrice(carDetails.getPrice());
-        updateCar.setAvailable(carDetails.isAvailable());
-
-        carRepository.save(updateCar);
-        return updateCar;
+        carService.delete(id);
     }
 }

@@ -1,9 +1,11 @@
 package com.tobeto.rentACar.controller;
 
-import com.tobeto.rentACar.entities.Brand;
-import com.tobeto.rentACar.repositories.BrandRepository;
-import org.springdoc.api.OpenApiResourceNotFoundException;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import com.tobeto.rentACar.services.abstracts.BrandService;
+import com.tobeto.rentACar.services.dtos.brand.request.AddBrandRequest;
+import com.tobeto.rentACar.services.dtos.brand.request.UpdateBrandRequest;
+import com.tobeto.rentACar.services.dtos.brand.response.AddBrandResponse;
+import com.tobeto.rentACar.services.dtos.brand.response.GetBrandResponse;
+import com.tobeto.rentACar.services.dtos.brand.response.UpdateBrandResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,42 +14,38 @@ import java.util.List;
 @RequestMapping("api/brands")
 public class BrandController {
 
-    private final BrandRepository brandRepository;
+    //Bağımlılıklar daima soyut nesneler üzerinden olur
+    private final BrandService brandService;
 
-    public BrandController(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public BrandController(BrandService brandService) {
+        this.brandService = brandService;
     }
 
     @GetMapping
-    public List<Brand> getAll(){
-        List<Brand> brands = brandRepository.findAll();
-        return brands;
+    public List<GetBrandResponse> getAll(){
+        return brandService.getAll();
     }
-
     @GetMapping("{id}")
-    public Brand getById(@PathVariable int id){
-        return brandRepository.findById(id).orElseThrow();
+    public GetBrandResponse getById(@PathVariable int id) throws Throwable {
+        return brandService.getBrandById(id);
     }
 
     @PostMapping
-    public void add(@RequestBody Brand brand){
-        brandRepository.save(brand);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id){
-        Brand brandToDelete = brandRepository.findById(id).orElseThrow();
-        brandRepository.delete(brandToDelete);
+    public AddBrandResponse add(@RequestBody AddBrandRequest request) throws Exception {
+        AddBrandRequest brandRequest = AddBrandRequest.builder().name(request.getName()).build();
+        return brandService.add(brandRequest);
     }
 
     @PutMapping("{id}")
-    public Brand updateBrand(@PathVariable int id,@RequestBody Brand brandDetails) throws Throwable {
-        Brand updateBrand = brandRepository.findById(id).orElseThrow(()->
-                new Throwable("Brand not exist with id : " + id));
-
-        updateBrand.setBrand_name(brandDetails.getBrand_name());
-        brandRepository.save(updateBrand);
-        return updateBrand;
+    public UpdateBrandResponse updateBrand(@RequestBody UpdateBrandRequest request) throws Throwable {
+        UpdateBrandRequest brandRequest = UpdateBrandRequest.builder()
+                .brandId(request.getBrandId())
+                .brandName(request.getBrandName()).build();
+        return brandService.update(brandRequest);
     }
 
+    @DeleteMapping("{id}")
+    public void delete (@PathVariable int id){
+        brandService.delete(id);
+    }
 }

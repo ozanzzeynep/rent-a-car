@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCarRequest {
-    private String brand;
-    private int id;
+    private int carId;
+    private int brandId;
     private String model;
     private int year;
     private double price;

@@ -14,9 +14,13 @@ public interface CarService {
 
     GetCarResponse getCarById(int id) throws Throwable;
 
-    AddCarResponse add(AddCarRequest request);
+    List<GetCarResponse> getAllCarByBrandName (String name);
 
-    UpdateCarResponse update(UpdateCarRequest request);
+    List<GetCarResponse> getAllAvailableCar();
+
+    AddCarResponse add(AddCarRequest request) throws Throwable;
+
+    UpdateCarResponse update(UpdateCarRequest request) throws Throwable;
 
     void delete (int id);
 

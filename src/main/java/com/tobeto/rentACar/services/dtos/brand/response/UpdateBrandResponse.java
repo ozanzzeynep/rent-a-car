@@ -4,11 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UpdateBrandResponse {
 
-    private int brandId;
-    private String brandName;
+    private int id;
+    private String name;
 }

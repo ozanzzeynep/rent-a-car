@@ -12,6 +12,8 @@ public interface BrandService {
 
     List<GetBrandResponse> getAll();
 
+    List<GetBrandResponse> searchBrandByName(String query);
+
     GetBrandResponse getBrandById(int id) throws Throwable;
 
     AddBrandResponse add(AddBrandRequest request) throws Exception;

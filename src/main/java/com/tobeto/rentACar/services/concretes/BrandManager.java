@@ -1,5 +1,6 @@
 package com.tobeto.rentACar.services.concretes;
 
+import com.tobeto.rentACar.core.utilities.mappers.ModelMapperService;
 import com.tobeto.rentACar.entities.Brand;
 import com.tobeto.rentACar.repositories.BrandRepository;
 import com.tobeto.rentACar.services.abstracts.BrandService;
@@ -10,75 +11,48 @@ import com.tobeto.rentACar.services.dtos.brand.response.AddBrandResponse;
 
 import com.tobeto.rentACar.services.dtos.brand.response.GetBrandResponse;
 import com.tobeto.rentACar.services.dtos.brand.response.UpdateBrandResponse;
+
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BrandManager implements BrandService {
 
-    private final BrandRepository brandRepository;
-
-    public BrandManager(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
-
+    private BrandRepository brandRepository;
+    private ModelMapperService modelMapperService;
 
     @Override
     public List<GetBrandResponse> getAll() {
-        List<Brand> brands = brandRepository.findAll();
-        List<GetBrandResponse> newBrandList = new ArrayList<>();
-        for (Brand b : brands){
-            newBrandList.add(GetBrandResponse.builder()
-                            .brandName(b.getBrand_name())
-                    .build());
-        }
-        return newBrandList;
+        return brandRepository.getAll();
+    }
 
+    @Override
+    public List<GetBrandResponse> searchBrandByName(String query) {
+        return brandRepository.searchBrandByName(query);
     }
 
     @Override
     public GetBrandResponse getBrandById(int id) throws Throwable {
-        Brand brand = brandRepository.findById(id).orElseThrow(()->
-                new Throwable("Brand is not exits"));
-        return GetBrandResponse.builder()
-                .brandName(brand.getBrand_name()).build();
+        Brand brand = this.brandRepository.findById(id).orElseThrow();
 
+        return this.modelMapperService.forResponse().map(brand,GetBrandResponse.class);
     }
-
     @Override
     public AddBrandResponse add(AddBrandRequest request) throws Exception {
-        if(request.getName().length() < 3){
-            throw new Exception("brand name cannot be less than three letters.");
-        }
-        int brandCount = brandRepository.findBrandByName((request.getName()));
-        if(brandCount > 0){
-            throw new Exception("Brand already saved.");
-        }
-        var brand = Brand.builder()
-                        .brand_name(request.getName())
-                                .build();
-        Brand savedBrand = brandRepository.save(brand);
-        return AddBrandResponse.builder()
-                .brandId(savedBrand.getId())
-                .brandName(savedBrand.getBrand_name())
-                .build();
+        Brand brand = this.modelMapperService.forRequest().map(request,Brand.class);
+        this.brandRepository.save(brand);
+
+        return this.modelMapperService.forResponse().map(brand,AddBrandResponse.class);
     }
     @Override
     public UpdateBrandResponse update(UpdateBrandRequest request) throws Throwable {
-        Brand brand = brandRepository.findById(request.getBrandId()).orElseThrow(()->
-                new Throwable("Brand is not exits "));
-        Brand newBrand = Brand.builder().id(brand.getId())
-                .brand_name(brand.getBrand_name()).build();
-        //newBrand.setId(request.getBrandId());
-        newBrand.setBrand_name(request.getBrandName());
+        Brand brand = this.modelMapperService.forRequest().map(request,Brand.class);
+        this.brandRepository.save(brand);
+        return this.modelMapperService.forResponse().map(brand,UpdateBrandResponse.class);
 
-        Brand savedBrand = brandRepository.save(newBrand);
-        return UpdateBrandResponse.builder()
-                .brandId(savedBrand.getId())
-                .brandName(savedBrand.getBrand_name())
-                .build();
     }
     @Override
     public void delete(int id) {

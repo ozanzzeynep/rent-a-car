@@ -2,9 +2,7 @@ package com.tobeto.rentACar.services.dtos.brand.request;
 
 import lombok.*;
 
-@Builder
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddBrandRequest {

@@ -1,4 +1,4 @@
-package com.tobeto.rentACar.controller;
+package com.tobeto.rentACar.controllers;
 
 import com.tobeto.rentACar.services.abstracts.CarService;
 import com.tobeto.rentACar.services.dtos.car.request.AddCarRequest;
@@ -6,6 +6,7 @@ import com.tobeto.rentACar.services.dtos.car.request.UpdateCarRequest;
 import com.tobeto.rentACar.services.dtos.car.response.AddCarResponse;
 import com.tobeto.rentACar.services.dtos.car.response.GetCarResponse;
 import com.tobeto.rentACar.services.dtos.car.response.UpdateCarResponse;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,31 +29,23 @@ public class CarController {
         return carService.getCarById(id);
     }
 
-
-    @PostMapping
-    public AddCarResponse add(@RequestBody AddCarRequest request){
-        AddCarRequest carRequest = AddCarRequest.builder()
-                .name(request.getName())
-                .model(request.getModel())
-                .year(request.getYear())
-                .price(request.getPrice())
-                .available(request.isAvailable())
-                .build();
-        return carService.add(carRequest);
+    @GetMapping("brand")
+    public List<GetCarResponse> getAllCarByBrandName (@Param("name") String name){
+        return carService.getAllCarByBrandName(name);
+    }
+    @GetMapping("available")
+    public List<GetCarResponse> getAllAvailableCar(){
+        return carService.getAllAvailableCar();
     }
 
-    @PutMapping("{id}")
-    public UpdateCarResponse updateCar(@PathVariable int id, @RequestBody UpdateCarRequest request) throws Throwable {
-        UpdateCarRequest carRequest = UpdateCarRequest.builder()
-                        .brand(request.getBrand())
-                                .id(request.getId())
-                                        .model(request.getModel())
-                                                .year(request.getYear())
-                .price(request.getPrice())
-                .available(request.isAvailable())
-                .build();
+    @PostMapping
+    public AddCarResponse add(@RequestBody AddCarRequest request) throws Throwable {
+        return carService.add(request);
+    }
 
-        return carService.update(carRequest);
+    @PutMapping()
+    public UpdateCarResponse updateCar(@RequestBody UpdateCarRequest request) throws Throwable {
+        return carService.update(request);
     }
 
     @DeleteMapping("{id}")

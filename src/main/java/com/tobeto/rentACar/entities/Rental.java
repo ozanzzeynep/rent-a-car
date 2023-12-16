@@ -2,15 +2,17 @@ package com.tobeto.rentACar.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Table(name = "rental")
+@Table(name = "rentals")
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Rental {
 
     @Id
@@ -18,13 +20,11 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     @Column(name = "date")
     private LocalDate date;
 
     @Column(name = "due")
     private LocalDate due;
-
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

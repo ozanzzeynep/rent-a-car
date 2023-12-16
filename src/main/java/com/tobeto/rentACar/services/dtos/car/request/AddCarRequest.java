@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class AddCarRequest {
 
-    private String name;
+    private int brandId;
     private String model;
     private int year;
     private double price;

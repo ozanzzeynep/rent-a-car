@@ -2,9 +2,7 @@ package com.tobeto.rentACar.services.dtos.customer.request;
 
 import lombok.*;
 
-@Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddCustomerRequest {

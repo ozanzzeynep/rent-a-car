@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment,Integer> {
 
-    @Query("Select new com.tobeto.rentACar.services.dtos.payment.response.GetPaymentResponse(p.cardNumber,p.date,p.cvv,p.customer) from Payment p")
+    @Query("Select new com.tobeto.rentACar.services.dtos.payment.response.GetPaymentResponse(p.id,p.customer.firstName,p.customer.lastName," +
+            "p.customer.phoneNumber,p.customer.email) from Payment p")
     List<GetPaymentResponse> getAll();
 }

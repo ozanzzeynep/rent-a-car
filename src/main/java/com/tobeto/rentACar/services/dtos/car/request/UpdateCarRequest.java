@@ -2,9 +2,7 @@ package com.tobeto.rentACar.services.dtos.car.request;
 
 import lombok.*;
 
-@Getter
-@Setter
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCarRequest {

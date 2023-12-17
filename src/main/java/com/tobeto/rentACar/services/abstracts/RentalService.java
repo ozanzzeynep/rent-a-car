@@ -14,7 +14,7 @@ public interface RentalService {
 
     GetRentalResponse getRentalById(int id);
 
-    AddRentalResponse add(AddRentalRequest request);
+    AddRentalResponse add(AddRentalRequest request) throws Throwable;
 
     UpdateRentalResponse update(UpdateRentalRequest request) throws Throwable;
 

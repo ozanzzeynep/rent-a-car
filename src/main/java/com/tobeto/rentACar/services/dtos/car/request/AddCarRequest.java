@@ -1,11 +1,8 @@
 package com.tobeto.rentACar.services.dtos.car.request;
 
-import com.tobeto.rentACar.entities.Brand;
 import lombok.*;
 
-@Getter
-@Setter
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddCarRequest {

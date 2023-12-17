@@ -10,9 +10,7 @@ import java.util.List;
 //ORM : Object Relation Mapping
 @Table(name = "cars")
 @Entity
-@Getter
-@Setter
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Car {
@@ -38,9 +36,7 @@ public class Car {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-
     @OneToMany(mappedBy = "car")
-    @JsonIgnore
     private List<Rental> rentals;
 
 }

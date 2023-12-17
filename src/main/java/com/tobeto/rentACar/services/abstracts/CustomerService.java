@@ -22,4 +22,6 @@ public interface CustomerService {
 
     void delete (int id);
 
+    Customer findCustomerById(int id) throws Throwable;
+
 }

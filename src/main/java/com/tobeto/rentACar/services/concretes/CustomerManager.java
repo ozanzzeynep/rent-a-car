@@ -9,20 +9,17 @@ import com.tobeto.rentACar.services.dtos.customer.request.UpdateCustomerRequest;
 import com.tobeto.rentACar.services.dtos.customer.response.AddCustomerResponse;
 import com.tobeto.rentACar.services.dtos.customer.response.GetCustomerResponse;
 import com.tobeto.rentACar.services.dtos.customer.response.UpdateCustomerResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CustomerManager implements CustomerService {
 
-    private final CustomerRepository customerRepository;
-    private final ModelMapperService modelMapperService;
-
-    public CustomerManager(CustomerRepository customerRepository, ModelMapperService modelMapperService) {
-        this.customerRepository = customerRepository;
-        this.modelMapperService = modelMapperService;
-    }
+    private CustomerRepository customerRepository;
+    private ModelMapperService modelMapperService;
 
     @Override
     public List<GetCustomerResponse> getAll() {
@@ -39,17 +36,17 @@ public class CustomerManager implements CustomerService {
     @Override
     public AddCustomerResponse add(AddCustomerRequest request) throws Exception {
         Customer customer = this.modelMapperService.forRequest().map(request,Customer.class);
-        Customer savedCustomer = customerRepository.save(customer);
-        return this.modelMapperService.forResponse().map(savedCustomer,AddCustomerResponse.class);
+        customerRepository.save(customer);
+        return this.modelMapperService.forResponse().map(customer,AddCustomerResponse.class);
     }
 
     @Override
     public UpdateCustomerResponse update(UpdateCustomerRequest request) throws Throwable {
         customerRepository.findById(request.getCustomerId()).orElseThrow(()->
                 new Throwable("Customer is not exits"));
-        Customer newCustomer = this.modelMapperService.forRequest().map(request,Customer.class);
-        Customer savedCustomer = customerRepository.save(newCustomer);
-        return this.modelMapperService.forResponse().map(savedCustomer,UpdateCustomerResponse.class);
+        Customer customer = this.modelMapperService.forRequest().map(request,Customer.class);
+        customerRepository.save(customer);
+        return this.modelMapperService.forResponse().map(customer,UpdateCustomerResponse.class);
     }
 
     @Override
@@ -57,5 +54,11 @@ public class CustomerManager implements CustomerService {
         Customer deleteCustomer = customerRepository.findById(id).orElseThrow();
         customerRepository.delete(deleteCustomer);
 
+    }
+
+    @Override
+    public Customer findCustomerById(int id) throws Throwable {
+        return customerRepository.findById(id).orElseThrow(()->
+                new Throwable("Customer is not exits"));
     }
 }

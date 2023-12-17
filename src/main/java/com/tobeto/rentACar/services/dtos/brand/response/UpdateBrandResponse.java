@@ -2,9 +2,9 @@ package com.tobeto.rentACar.services.dtos.brand.response;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateBrandResponse {
 
     private int id;

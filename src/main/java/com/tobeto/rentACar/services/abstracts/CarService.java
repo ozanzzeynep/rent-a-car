@@ -1,5 +1,6 @@
 package com.tobeto.rentACar.services.abstracts;
 
+import com.tobeto.rentACar.entities.Car;
 import com.tobeto.rentACar.services.dtos.car.request.AddCarRequest;
 import com.tobeto.rentACar.services.dtos.car.request.UpdateCarRequest;
 import com.tobeto.rentACar.services.dtos.car.response.AddCarResponse;
@@ -23,6 +24,8 @@ public interface CarService {
     UpdateCarResponse update(UpdateCarRequest request) throws Throwable;
 
     void delete (int id);
+
+    Car findCarById(int id) throws Throwable;
 
 
 

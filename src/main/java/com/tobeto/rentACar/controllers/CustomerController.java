@@ -6,20 +6,17 @@ import com.tobeto.rentACar.services.dtos.customer.request.UpdateCustomerRequest;
 import com.tobeto.rentACar.services.dtos.customer.response.AddCustomerResponse;
 import com.tobeto.rentACar.services.dtos.customer.response.GetCustomerResponse;
 import com.tobeto.rentACar.services.dtos.customer.response.UpdateCustomerResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("api/customers")
 public class CustomerController {
 
-    private final CustomerService customerService;
-
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+    private CustomerService customerService;
 
     @GetMapping
     public List<GetCustomerResponse> getAll(){
@@ -36,8 +33,8 @@ public class CustomerController {
         return customerService.add(request);
     }
 
-    @PutMapping("{id}")
-    public UpdateCustomerResponse updateCustomer(@PathVariable int id, @RequestBody UpdateCustomerRequest request) throws Throwable {
+    @PutMapping()
+    public UpdateCustomerResponse updateCustomer(@RequestBody UpdateCustomerRequest request) throws Throwable {
 
         return customerService.update(request);
     }

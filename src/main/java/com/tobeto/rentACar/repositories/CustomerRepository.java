@@ -14,7 +14,4 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
             "from Customer c")
     List<GetCustomerResponse> getAll();
 
-
-
-
 }

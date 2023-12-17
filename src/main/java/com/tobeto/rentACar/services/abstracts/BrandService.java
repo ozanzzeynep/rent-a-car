@@ -1,5 +1,6 @@
 package com.tobeto.rentACar.services.abstracts;
 
+import com.tobeto.rentACar.entities.Brand;
 import com.tobeto.rentACar.services.dtos.brand.request.AddBrandRequest;
 import com.tobeto.rentACar.services.dtos.brand.request.UpdateBrandRequest;
 import com.tobeto.rentACar.services.dtos.brand.response.AddBrandResponse;
@@ -21,5 +22,8 @@ public interface BrandService {
     UpdateBrandResponse update(UpdateBrandRequest request) throws Throwable;
 
     void delete(int id);
+
+
+    Brand findBrandById(int id) throws Throwable;
 
 }

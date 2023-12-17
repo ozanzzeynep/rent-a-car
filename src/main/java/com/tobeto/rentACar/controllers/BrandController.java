@@ -38,8 +38,9 @@ public class BrandController {
     }
 
     @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
     public AddBrandResponse add(@RequestBody @Valid AddBrandRequest request) throws Exception {
-        return brandService.add(request);
+       return brandService.add(request);
     }
 
     @PutMapping()

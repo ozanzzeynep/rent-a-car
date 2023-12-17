@@ -1,6 +1,5 @@
 package com.tobeto.rentACar.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,9 +7,7 @@ import java.util.List;
 
 @Table(name = "customers")
 @Entity
-@Getter
-@Setter
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
@@ -37,6 +34,5 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
-
 
 }

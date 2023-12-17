@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car,Integer> {
 
-    @Query("Select new com.tobeto.rentACar.services.dtos.car.response.GetCarResponse(c.brand.brand_name,c.model,c.year,c.price,c.available) from Car c")
+    @Query("Select new com.tobeto.rentACar.services.dtos.car.response.GetCarResponse(c.brand.name,c.model,c.year,c.price,c.available) from Car c")
     List<GetCarResponse> getAll();
 
-    @Query("select new com.tobeto.rentACar.services.dtos.car.response.GetCarResponse(b.brand_name,c.model,c.year,c.price,c.available) from Car c inner join c.brand b where b.brand_name = :name")
+    @Query("select new com.tobeto.rentACar.services.dtos.car.response.GetCarResponse(b.name,c.model,c.year,c.price,c.available) from Car c inner join c.brand b where b.name = :name")
     List<GetCarResponse> getAllCarByBrandName(String name);
 
-    @Query("select new com.tobeto.rentACar.services.dtos.car.response.GetCarResponse(b.brand_name,c.model,c.year,c.price,c.available) from Car c inner join c.brand b where c.available = true")
+    @Query("select new com.tobeto.rentACar.services.dtos.car.response.GetCarResponse(b.name,c.model,c.year,c.price,c.available) from Car c inner join c.brand b where c.available = true")
     List<GetCarResponse> getAllAvailableCar();
 
 }

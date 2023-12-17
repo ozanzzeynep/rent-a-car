@@ -36,19 +36,21 @@ public class BrandManager implements BrandService {
 
     @Override
     public GetBrandResponse getBrandById(int id) throws Throwable {
-        Brand brand = this.brandRepository.findById(id).orElseThrow();
-
+        Brand brand = this.brandRepository.findById(id).orElseThrow(()->
+                new Throwable("Brand is not exits"));
         return this.modelMapperService.forResponse().map(brand,GetBrandResponse.class);
     }
     @Override
     public AddBrandResponse add(AddBrandRequest request) throws Exception {
         Brand brand = this.modelMapperService.forRequest().map(request,Brand.class);
         this.brandRepository.save(brand);
-
         return this.modelMapperService.forResponse().map(brand,AddBrandResponse.class);
+
     }
     @Override
     public UpdateBrandResponse update(UpdateBrandRequest request) throws Throwable {
+        brandRepository.findById(request.getId()).orElseThrow(()->
+                new Throwable("Brand is not exits"));
         Brand brand = this.modelMapperService.forRequest().map(request,Brand.class);
         this.brandRepository.save(brand);
         return this.modelMapperService.forResponse().map(brand,UpdateBrandResponse.class);
@@ -58,5 +60,11 @@ public class BrandManager implements BrandService {
     public void delete(int id) {
         Brand deleteBrand = brandRepository.findById(id).orElseThrow();
         brandRepository.delete(deleteBrand);
+    }
+
+    @Override
+    public Brand findBrandById(int id) throws Throwable {
+        return brandRepository.findById(id).orElseThrow(()->
+                new Throwable ("Brand is not exits"));
     }
 }

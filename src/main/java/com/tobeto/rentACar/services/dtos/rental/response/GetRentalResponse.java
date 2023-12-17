@@ -6,14 +6,14 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetRentalResponse {
     private LocalDate date;
     private LocalDate due;
-    private Customer customer;
-    private Car car;
+    private String customerFirstName;
+    private String customerLastName;
+    private String carModel;
+    private double carPrice;
 }

@@ -2,9 +2,9 @@ package com.tobeto.rentACar.services.dtos.brand.response;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class GetBrandResponse {
-    private String brandName;
+    private String name;
 }

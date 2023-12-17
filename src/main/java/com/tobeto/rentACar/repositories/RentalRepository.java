@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface RentalRepository extends JpaRepository<Rental,Integer> {
 
-    @Query("Select new com.tobeto.rentACar.services.dtos.rental.response.GetRentalResponse(r.date,r.due,r.customer.firstName" +
-            ",r.customer.lastName,r.customer.email,r.car.model,r.car.brand.brand_name) " +
+    @Query("Select new com.tobeto.rentACar.services.dtos.rental.response.GetRentalResponse(r.date,r.due,r.customer.firstName,r.customer.lastName," +
+            "r.car.model,r.car.price) " +
             "from Rental r")
     List<GetRentalResponse> getAll();
 

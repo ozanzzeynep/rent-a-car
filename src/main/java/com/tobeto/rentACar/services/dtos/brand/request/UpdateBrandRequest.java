@@ -6,6 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 public class UpdateBrandRequest {
+
     private int id;
     private String name;
 }

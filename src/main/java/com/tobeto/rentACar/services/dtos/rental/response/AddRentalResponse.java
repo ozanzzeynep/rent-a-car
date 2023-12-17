@@ -1,23 +1,21 @@
 package com.tobeto.rentACar.services.dtos.rental.response;
 
 
+import com.tobeto.rentACar.entities.Car;
+import com.tobeto.rentACar.entities.Customer;
 import lombok.*;
 
 import java.time.LocalDate;
 
-@Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddRentalResponse {
 
     private LocalDate date;
     private LocalDate due;
-    private String customerName;
-    private String customerSurname;
-    private String customerEmail;
+    private String customerFirstName;
+    private String customerLastName;
     private String carModel;
-    private String carBrand;
 
 }

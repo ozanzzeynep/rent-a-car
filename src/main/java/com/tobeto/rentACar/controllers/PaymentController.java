@@ -6,19 +6,16 @@ import com.tobeto.rentACar.services.dtos.payment.request.UpdatePaymentRequest;
 import com.tobeto.rentACar.services.dtos.payment.response.AddPaymentResponse;
 import com.tobeto.rentACar.services.dtos.payment.response.GetPaymentResponse;
 import com.tobeto.rentACar.services.dtos.payment.response.UpdatePaymentResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("api/payments")
 public class PaymentController {
 
     private final PaymentService paymentService;
-
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
 
     @GetMapping
     public List<GetPaymentResponse> getAll(){
@@ -31,10 +28,10 @@ public class PaymentController {
     }
 
     @PostMapping
-    public AddPaymentResponse add(@RequestBody AddPaymentRequest request){
+    public AddPaymentResponse add(@RequestBody AddPaymentRequest request) throws Throwable {
         return paymentService.add(request);
     }
-    @PutMapping("{id}")
+    @PutMapping("/update")
     public UpdatePaymentResponse updatePayment(@RequestBody UpdatePaymentRequest request) throws Throwable {
         return paymentService.update(request);
     }

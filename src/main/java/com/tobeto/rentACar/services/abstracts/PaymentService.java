@@ -14,9 +14,9 @@ public interface PaymentService {
 
     GetPaymentResponse getPaymentById(int id);
 
-    AddPaymentResponse add(AddPaymentRequest request);
+    AddPaymentResponse add(AddPaymentRequest request) throws Throwable;
 
-    UpdatePaymentResponse update(UpdatePaymentRequest request);
+    UpdatePaymentResponse update(UpdatePaymentRequest request) throws Throwable;
 
     void delete (int id);
 }

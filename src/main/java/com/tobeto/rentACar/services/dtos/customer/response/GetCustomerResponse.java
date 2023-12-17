@@ -2,9 +2,7 @@ package com.tobeto.rentACar.services.dtos.customer.response;
 
 import lombok.*;
 
-@Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetCustomerResponse {

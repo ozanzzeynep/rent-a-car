@@ -13,13 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/cars")
+@CrossOrigin
 public class CarController {
     private final CarService carService;
 
     public CarController(CarService carService) {
         this.carService = carService;
     }
-    @GetMapping
+    @GetMapping("/getAll")
     public List<GetCarResponse> getAll(){
         return carService.getAll();
     }
@@ -38,7 +39,7 @@ public class CarController {
         return carService.getAllAvailableCar();
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public AddCarResponse add(@RequestBody AddCarRequest request) throws Throwable {
         return carService.add(request);
     }

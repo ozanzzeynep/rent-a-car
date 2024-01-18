@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 public class GetCarResponse {
 
+    private int id;
     private String brandName;
     private String model;
     private int year;
